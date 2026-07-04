@@ -7,8 +7,8 @@ Development follows small, releasable increments. Each item below is one loop.
 - [x] Loop 1: repository scaffold, CI with a docker compose smoke test, blank deployable page
 - [x] Loop 2: probe function — HTTP status, latency, timeout and keyword assertion, fully tested
 - [x] Loop 3: scheduler — per-monitor intervals, incident open/close state machine, tested
-- [ ] Loop 4: webhook notifications — Discord and Slack payloads for down and recovery
-- [ ] Release v0.1.0
+- [x] Loop 4: webhook notifications — Discord and Slack payloads for down and recovery
+- [x] Release v0.1.0
 
 ## Milestone: v0.2.0 — Dashboard and status page
 
