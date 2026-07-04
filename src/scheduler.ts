@@ -18,6 +18,7 @@ import {
   insertCheck,
   lastCheckTs,
   listMonitors,
+  nthLastCheckTs,
   openIncident,
   resolveIncident,
   startIncident,
@@ -69,8 +70,12 @@ export function recordResult(
     return undefined;
   }
 
-  if (!current && failureStreak(db, monitor.id) >= FAILURE_THRESHOLD) {
-    const incident = startIncident(db, monitor.id, ts, result.error ?? 'check failed');
+  const streak = failureStreak(db, monitor.id);
+  if (!current && streak >= FAILURE_THRESHOLD) {
+    // The outage began at the first failure of the streak, not at the
+    // check that crossed the alert threshold.
+    const startedAt = nthLastCheckTs(db, monitor.id, streak) ?? ts;
+    const incident = startIncident(db, monitor.id, startedAt, result.error ?? 'check failed');
     return { type: 'down', monitor, incident, result };
   }
   return undefined;

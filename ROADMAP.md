@@ -14,7 +14,7 @@ Development follows small, releasable increments. Each item below is one loop.
 
 - [x] Loop 5: admin API (bearer token) and monitor CRUD UI
 - [ ] Loop 6: latency charts (24h / 7d / 30d) and incident timeline
-- [ ] Loop 7: public status page at /status/:slug — 90-day availability bars, uptime percentages, no login
+- [x] Loop 7: public status page — 90-day availability bars, uptime percentages, no login
 - [ ] Release v0.2.0
 
 ## Milestone: v1.0.0 — Ship

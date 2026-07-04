@@ -10,6 +10,7 @@ import Fastify, { type FastifyInstance, type FastifyReply, type FastifyRequest }
 import fastifyStatic from '@fastify/static';
 import type { Config } from './config.ts';
 import type { Db } from './db.ts';
+import { computeStatusPage } from './status.ts';
 import {
   createMonitor,
   deleteMonitor,
@@ -96,6 +97,16 @@ export function buildApp(db: Db, config: Config): FastifyInstance {
     ok: true,
     monitors: (db.prepare('SELECT COUNT(*) AS n FROM monitors').get() as { n: number }).n,
   }));
+
+  // The public status page data: no auth, but only under the
+  // configured slug so the page stays unguessable if wanted.
+  app.get('/api/status/:slug', (request, reply) => {
+    const { slug } = request.params as { slug: string };
+    if (slug !== config.statusSlug) {
+      return reply.code(404).send({ error: 'not found' });
+    }
+    return computeStatusPage(db);
+  });
 
   app.post('/api/auth/verify', (request, reply) => {
     if (!requireAdmin(request, reply)) {

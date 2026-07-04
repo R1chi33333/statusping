@@ -136,6 +136,16 @@ export function failureStreak(db: Db, monitorId: number, limit = 10): number {
   return streak;
 }
 
+/** Timestamp of the nth most recent check (1-based), if it exists. */
+export function nthLastCheckTs(db: Db, monitorId: number, n: number): string | undefined {
+  const row = db
+    .prepare(
+      'SELECT ts FROM checks WHERE monitor_id = ? ORDER BY ts DESC, id DESC LIMIT 1 OFFSET ?',
+    )
+    .get(monitorId, n - 1) as { ts: string } | undefined;
+  return row?.ts;
+}
+
 export function openIncident(db: Db, monitorId: number): Incident | undefined {
   const row = db
     .prepare('SELECT * FROM incidents WHERE monitor_id = ? AND resolved_at IS NULL')
