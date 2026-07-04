@@ -3,12 +3,32 @@ import { loadConfig } from '../src/config.ts';
 import { openDb } from '../src/db.ts';
 
 describe('loadConfig', () => {
-  it('reads values from the environment with defaults', () => {
-    const config = loadConfig({ PORT: '4100', ADMIN_TOKEN: 'secret' });
-    expect(config.port).toBe(4100);
-    expect(config.adminToken).toBe('secret');
-    expect(config.statusSlug).toBe('status');
-    expect(config.databasePath).toContain('statusping.db');
+  it('uses defaults for an empty environment', () => {
+    const config = loadConfig({});
+    expect(config).toEqual({
+      port: 3000,
+      host: '0.0.0.0',
+      databasePath: './data/statusping.db',
+      adminToken: '',
+      statusSlug: 'status',
+    });
+  });
+
+  it('reads every value from the environment', () => {
+    const config = loadConfig({
+      PORT: '4100',
+      HOST: '127.0.0.1',
+      DATABASE_PATH: '/tmp/x.db',
+      ADMIN_TOKEN: 'secret',
+      STATUS_SLUG: 'portfolio',
+    });
+    expect(config).toEqual({
+      port: 4100,
+      host: '127.0.0.1',
+      databasePath: '/tmp/x.db',
+      adminToken: 'secret',
+      statusSlug: 'portfolio',
+    });
   });
 });
 
