@@ -13,9 +13,9 @@ Development follows small, releasable increments. Each item below is one loop.
 ## Milestone: v0.2.0 — Dashboard and status page
 
 - [x] Loop 5: admin API (bearer token) and monitor CRUD UI
-- [ ] Loop 6: latency charts (24h / 7d / 30d) and incident timeline
+- [x] Loop 6: latency charts (24h / 7d / 30d) and incident timeline
 - [x] Loop 7: public status page — 90-day availability bars, uptime percentages, no login
-- [ ] Release v0.2.0
+- [x] Release v0.2.0
 
 ## Milestone: v1.0.0 — Ship
 

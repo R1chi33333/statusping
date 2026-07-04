@@ -11,6 +11,7 @@ import fastifyStatic from '@fastify/static';
 import type { Config } from './config.ts';
 import type { Db } from './db.ts';
 import { computeStatusPage } from './status.ts';
+import { isHistoryWindow, latencyHistory, recentIncidents } from './history.ts';
 import {
   createMonitor,
   deleteMonitor,
@@ -135,6 +136,25 @@ export function buildApp(db: Db, config: Config): FastifyInstance {
         openIncident: openIncident(db, monitor.id) ?? null,
       };
     });
+  });
+
+  app.get('/api/monitors/:id/history', (request, reply) => {
+    if (!requireAdmin(request, reply)) {
+      return;
+    }
+    const id = Number((request.params as { id: string }).id);
+    if (!getMonitor(db, id)) {
+      return reply.code(404).send({ error: 'monitor not found' });
+    }
+    const window = (request.query as { window?: string }).window ?? '24h';
+    if (!isHistoryWindow(window)) {
+      return reply.code(400).send({ error: 'window must be 24h, 7d or 30d' });
+    }
+    return {
+      window,
+      buckets: latencyHistory(db, id, window),
+      incidents: recentIncidents(db, id),
+    };
   });
 
   app.post('/api/monitors', (request, reply) => {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { Activity, LogOut, Pencil, Plus, Trash2 } from 'lucide-react';
 import {
   clearToken,
@@ -12,6 +12,7 @@ import {
   type MonitorInput,
   type MonitorRow,
 } from '@web/lib/api';
+import { MonitorDetail } from './MonitorDetail';
 import { MonitorForm } from './MonitorForm';
 
 const REFRESH_MS = 15_000;
@@ -89,6 +90,7 @@ export function AdminPage() {
   const [authed, setAuthed] = useState(() => getToken() !== '');
   const [monitors, setMonitors] = useState<MonitorRow[]>([]);
   const [editing, setEditing] = useState<MonitorRow | 'new' | null>(null);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const [error, setError] = useState<string>();
 
   const refresh = useCallback(() => {
@@ -202,47 +204,63 @@ export function AdminPage() {
             </thead>
             <tbody className="divide-y divide-border">
               {monitors.map((monitor) => (
-                <tr key={monitor.id} className="hover:bg-surface-1">
-                  <td className="px-4 py-3">
-                    <StatusDot monitor={monitor} />
-                  </td>
-                  <td className="px-4 py-3">{monitor.name}</td>
-                  <td className="max-w-64 truncate px-4 py-3 font-mono text-xs text-fg-muted">
-                    {monitor.url}
-                  </td>
-                  <td className="px-4 py-3 text-right font-mono text-xs">
-                    {monitor.lastCheck?.latencyMs != null
-                      ? `${String(monitor.lastCheck.latencyMs)}ms`
-                      : ''}
-                  </td>
-                  <td className="px-4 py-3 text-right font-mono text-xs text-fg-muted">
-                    {monitor.intervalS}s
-                  </td>
-                  <td className="px-2 py-3 text-right">
-                    <div className="flex justify-end gap-1">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setEditing(monitor);
-                        }}
-                        className="rounded p-1.5 text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
-                        aria-label={`Edit ${monitor.name}`}
-                      >
-                        <Pencil className="size-4" strokeWidth={1.5} />
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          void deleteMonitor(monitor.id).then(refresh);
-                        }}
-                        className="rounded p-1.5 text-fg-muted transition-colors hover:bg-surface-2 hover:text-down"
-                        aria-label={`Delete ${monitor.name}`}
-                      >
-                        <Trash2 className="size-4" strokeWidth={1.5} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
+                <Fragment key={monitor.id}>
+                  <tr
+                    className="cursor-pointer hover:bg-surface-1"
+                    onClick={() => {
+                      setExpanded((current) => (current === monitor.id ? null : monitor.id));
+                    }}
+                  >
+                    <td className="px-4 py-3">
+                      <StatusDot monitor={monitor} />
+                    </td>
+                    <td className="px-4 py-3">{monitor.name}</td>
+                    <td className="max-w-64 truncate px-4 py-3 font-mono text-xs text-fg-muted">
+                      {monitor.url}
+                    </td>
+                    <td className="px-4 py-3 text-right font-mono text-xs">
+                      {monitor.lastCheck?.latencyMs != null
+                        ? `${String(monitor.lastCheck.latencyMs)}ms`
+                        : ''}
+                    </td>
+                    <td className="px-4 py-3 text-right font-mono text-xs text-fg-muted">
+                      {monitor.intervalS}s
+                    </td>
+                    <td className="px-2 py-3 text-right">
+                      <div className="flex justify-end gap-1">
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setEditing(monitor);
+                          }}
+                          className="rounded p-1.5 text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+                          aria-label={`Edit ${monitor.name}`}
+                        >
+                          <Pencil className="size-4" strokeWidth={1.5} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            void deleteMonitor(monitor.id).then(refresh);
+                          }}
+                          className="rounded p-1.5 text-fg-muted transition-colors hover:bg-surface-2 hover:text-down"
+                          aria-label={`Delete ${monitor.name}`}
+                        >
+                          <Trash2 className="size-4" strokeWidth={1.5} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  {expanded === monitor.id && (
+                    <tr>
+                      <td colSpan={6} className="p-0">
+                        <MonitorDetail monitor={monitor} />
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               ))}
             </tbody>
           </table>
