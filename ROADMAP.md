@@ -5,7 +5,7 @@ Development follows small, releasable increments. Each item below is one loop.
 ## Milestone: v0.1.0 — Probe engine
 
 - [x] Loop 1: repository scaffold, CI with a docker compose smoke test, blank deployable page
-- [ ] Loop 2: probe function — HTTP status, latency, timeout and keyword assertion, fully tested
+- [x] Loop 2: probe function — HTTP status, latency, timeout and keyword assertion, fully tested
 - [ ] Loop 3: scheduler — per-monitor intervals, incident open/close state machine, tested with fake timers
 - [ ] Loop 4: webhook notifications — Discord and Slack payloads for down and recovery
 - [ ] Release v0.1.0
