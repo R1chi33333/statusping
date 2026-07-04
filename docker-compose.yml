@@ -1,0 +1,15 @@
+services:
+  statusping:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      # Set a strong token before exposing the admin UI.
+      ADMIN_TOKEN: ${ADMIN_TOKEN:-change-me}
+      DATABASE_PATH: /app/data/statusping.db
+    volumes:
+      - statusping-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  statusping-data:
