@@ -19,10 +19,10 @@ Development follows small, releasable increments. Each item below is one loop.
 
 ## Milestone: v1.0.0 — Ship
 
-- [ ] Loop 8: Railway deployment, monitors for the three portfolio demos, first real incident recorded
+- [x] Loop 8: Railway deployment, monitors for the three portfolio demos, real incidents recorded
 - [x] Loop 9: Playwright e2e — admin add-monitor flow and public status page flow
-- [ ] Loop 10: README with self-host guide, deploy button, screenshot
-- [ ] Release v1.0.0
+- [x] Loop 10: README with self-host guide, deploy button and live screenshot
+- [x] Release v1.0.0
 
 ## Later
 

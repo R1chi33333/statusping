@@ -4,9 +4,13 @@
 
 # StatusPing — self-hosted uptime monitoring in one container
 
-[Live Status Page](https://statusping.up.railway.app/status/status) · [Documentation](#self-hosting) · [Report Bug](https://github.com/R1chi33333/statusping/issues/new?template=bug_report.md)
+[Live Status Page](https://statusping-production.up.railway.app/status/portfolio) · [Documentation](#self-hosting) · [Report Bug](https://github.com/R1chi33333/statusping/issues/new?template=bug_report.md)
 
-> Status: under active development, pre-v0.1.0.
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https%3A%2F%2Fgithub.com%2FR1chi33333%2Fstatusping)
+
+![StatusPing public status page monitoring the three portfolio apps](./docs/status-page.png)
+
+The status page above is this repository's own instance, watching the other three projects in this portfolio: [nz-bank-parser](https://github.com/R1chi33333/nz-bank-parser), [FlatSplit](https://github.com/R1chi33333/flatsplit) and [NZ Housing Observatory](https://github.com/R1chi33333/nz-housing-observatory). The red cells are real: two keyword assertions were misconfigured on day one (keyword checks read the raw HTML, not the rendered page) and the incidents stayed on the record.
 
 ## Why this exists
 
@@ -60,6 +64,7 @@ npm run dev:web        # UI on :5173, proxying /api
 ```bash
 npm test               # probe, scheduler and notification unit tests
 npm run test:coverage  # with coverage report
+npm run e2e            # Playwright: admin flow and public status page
 ```
 
 ## Roadmap
