@@ -1,0 +1,22 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --color-surface-0: #0a0a0b;
+  --color-surface-1: #111113;
+  --color-surface-2: #18181b;
+  --color-fg: #fafafa;
+  --color-fg-muted: #a1a1aa;
+  --color-border: #27272a;
+  /* Monitoring semantics: the one project allowed two accents. */
+  --color-up: #22c55e;
+  --color-down: #ef4444;
+}
+
+body {
+  @apply bg-surface-0 font-sans text-fg antialiased;
+}
