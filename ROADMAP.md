@@ -6,7 +6,7 @@ Development follows small, releasable increments. Each item below is one loop.
 
 - [x] Loop 1: repository scaffold, CI with a docker compose smoke test, blank deployable page
 - [x] Loop 2: probe function — HTTP status, latency, timeout and keyword assertion, fully tested
-- [ ] Loop 3: scheduler — per-monitor intervals, incident open/close state machine, tested with fake timers
+- [x] Loop 3: scheduler — per-monitor intervals, incident open/close state machine, tested
 - [ ] Loop 4: webhook notifications — Discord and Slack payloads for down and recovery
 - [ ] Release v0.1.0
 
