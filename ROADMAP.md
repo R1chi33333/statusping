@@ -12,7 +12,7 @@ Development follows small, releasable increments. Each item below is one loop.
 
 ## Milestone: v0.2.0 — Dashboard and status page
 
-- [ ] Loop 5: admin API (bearer token) and monitor CRUD UI
+- [x] Loop 5: admin API (bearer token) and monitor CRUD UI
 - [ ] Loop 6: latency charts (24h / 7d / 30d) and incident timeline
 - [ ] Loop 7: public status page at /status/:slug — 90-day availability bars, uptime percentages, no login
 - [ ] Release v0.2.0
