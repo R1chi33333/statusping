@@ -48,7 +48,9 @@ export function clearToken(): void {
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers);
-  headers.set('Content-Type', 'application/json');
+  if (init?.body !== undefined) {
+    headers.set('Content-Type', 'application/json');
+  }
   if (!headers.has('Authorization')) {
     headers.set('Authorization', `Bearer ${getToken()}`);
   }

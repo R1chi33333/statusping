@@ -20,5 +20,14 @@
       "@server/*": ["./src/*"]
     }
   },
-  "include": ["src", "web/src", "tests", "tsup.config.ts", "vitest.config.ts", "web/vite.config.ts"]
+  "include": [
+    "src",
+    "web/src",
+    "tests",
+    "tsup.config.ts",
+    "vitest.config.ts",
+    "web/vite.config.ts",
+    "e2e",
+    "playwright.config.ts"
+  ]
 }
